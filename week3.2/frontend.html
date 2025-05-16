@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sum using Fetch</title>
+</head>
+<body>
+  <h2>Sum of Two Numbers</h2>
+  <input id="num1" type="number" placeholder="Enter first number" />
+  <input id="num2" type="number" placeholder="Enter second number" />
+  <button onclick="calculateSum()">Add</button>
+
+  <h3>Result: <span id="result"></span></h3>
+
+  <script>
+    // Function to call backend API using fetch
+    function calculateSum() {
+      // Get values from input fields
+      const num1 = Number(document.getElementById('num1').value);
+      const num2 = Number(document.getElementById('num2').value);
+
+      // Make POST request using fetch
+      fetch('http://localhost:3000/add', {
+        method: 'POST',             // Request type
+        headers: {
+          'Content-Type': 'application/json'  // Tell server we send JSON
+        },
+        body: JSON.stringify({ num1, num2 }) // Data convert to JSON string
+      })
+      .then(response => response.json())    // Parse JSON response
+      .then(data => {
+        // Show result on page
+        document.getElementById('result').textContent = data.sum;
+      })
+      .catch(err => {
+        console.error('Error:', err);
+      });
+    }
+  </script>
+</body>
+</html>
