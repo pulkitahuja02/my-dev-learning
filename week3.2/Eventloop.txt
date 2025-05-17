@@ -1,0 +1,98 @@
+JavaScript Execution Model: Call Stack, Callback Queue & Event Loop
+=================================================================
+
+1. Call Stack (Execution Stack)
+-----------------------------
+- LIFO (Last In, First Out) stack for synchronous code
+- Each function call creates a stack frame
+- Example:
+  function greet() {
+    console.log("Hello");
+  }
+  greet();
+  
+  Flow:
+  [greet()] → [console.log("Hello")] → []
+
+2. Web APIs & Async Operations
+-----------------------------
+- Handles: setTimeout, fetch, DOM events
+- Offloads async tasks from main thread
+- Example:
+  setTimeout(() => console.log("Timeout"), 1000);
+  
+  Flow:
+  Web API (Timer) → After delay → Callback Queue
+
+3. Callback Queue (Task Queue)
+-----------------------------
+- FIFO (First In, First Out) queue for async callbacks
+- Waits until Call Stack is empty
+- Example:
+  setTimeout(() => console.log("First"), 500);
+  setTimeout(() => console.log("Second"), 100);
+  
+  Output:
+  Second
+  First
+
+4. Event Loop
+------------
+- Continuously checks:
+  1. Is Call Stack empty?
+  2. Are there callbacks in Queue?
+- Moves callbacks to Call Stack when safe
+
+5. Microtask Queue
+-----------------
+- Higher priority than Callback Queue
+- Handles: Promises, MutationObserver
+- Example:
+  Promise.resolve().then(() => console.log("Promise"));
+  setTimeout(() => console.log("Timeout"), 0);
+  
+  Output:
+  Promise
+  Timeout
+
+Key Differences
+---------------
+| Feature        | Call Stack       | Callback Queue | Microtask Queue |
+|---------------|------------------|----------------|-----------------|
+| Type          | Sync             | Async          | Async           |
+| Priority      | Highest          | Normal         | High            |
+| Examples      | console.log()    | setTimeout     | Promises        |
+
+Common Misconceptions
+--------------------
+❌ "setTimeout(0) runs immediately" → Actually goes through Queue
+❌ "Callbacks go direct to Call Stack" → Must wait in Queue first
+❌ "Callback Stack exists" → Only Call Stack and Queues exist
+
+Visualization
+-------------
+[Call Stack]
+   ↑
+Event Loop (Checks Stack)
+   ↓
+[Callback Queue] ← From Web APIs
+[Microtask Queue] ← Higher priority
+
+Important Notes:
+1. JavaScript is single-threaded but uses Web APIs for async
+2. Event Loop manages execution order
+3. Microtasks run before Macrotasks
+This format:
+
+Uses clear section headers
+
+Has consistent indentation
+
+Includes code examples with proper spacing
+
+Presents comparisons in table format
+
+Highlights key points with bullet points
+
+You can copy this directly into your .txt file and it will maintain proper formatting. Let me know if you'd like any modifications!
+
