@@ -1,0 +1,107 @@
+Hashing - Quick Notes
+
+1. Hashing is One-Way:
+   - You can convert input to hash, but NOT back.
+   - Example: "password123" → "e99a18c428cb38d5f260853678922e03"
+
+2. Output Does NOT Reveal Input:
+   - Hashed value gives no clue about original input.
+
+3. Small Input Change → Huge Hash Change:
+   - "hello" → "5d41402abc4b2a76b9719d911017c592"
+   - "Hello" → "8b1a9953c4611296a827abf8c47804d7"
+
+4. Fixed Length Output:
+   - Input size doesn't affect hash size.
+   - SHA-256 always gives 64-character hash.
+
+5. Popular Hash Algorithms:
+   - MD5 (128-bit, weak)
+   - SHA-1 (160-bit, insecure)
+   - SHA-256 (256-bit, secure and recommended)
+
+6. Uses of Hashing:
+   - Storing passwords securely
+   - File integrity checking
+   - Creating digital signatures
+
+
+
+Authentication & Password Hashing - Short Notes (Hinglish)
+1. Hashing (Password ko Secure Karne ka Tarika)
+Kya Hai? Password ko fixed-length random text mein convert karna (e.g., "pulkit" → a1b2c3...).
+
+Key Points:
+
+One-Way Function: Hash ko wapas original password mein nahi badal sakte.
+
+Deterministic: Same input → Same hash (har baar).
+
+Use Case: Database mein passwords store karna.
+
+2. Salt (Extra Security Layer)
+Kya Hai? Har password ke saath ek random string mix karna (e.g., "pulkit" + "sdf9k3").
+
+Why?
+
+Same password, alag users ke liye alag hash banega.
+
+Hackers ke pre-computed hashes (rainbow tables) fail honge.
+
+Verify Kaise Kare?
+
+Database se user ka salt aur stored hash nikalo.
+
+User ka diya password + salt ko hash karo.
+
+Result ko stored hash se match karo.
+
+3. Slow Hash Functions (bcrypt, PBKDF2)
+Kyu Important?
+
+Simple hash (SHA-256) fast hai → Hackers brute-force kar sakte hain.
+
+bcrypt/PBKDF2 deliberately slow hote hain → Crack karna mushkil.
+
+Flow: Signup → Login
+Signup Time:
+User enters "pulkit".
+
+System:
+
+Generates a random salt (e.g., "sdf9k3").
+
+Computes Hash("pulkitsdf9k3") → z4x5v6....
+
+Stores salt and z4x5v6... in database.
+
+Login Time:
+User enters "pulkit".
+
+System:
+
+Fetches salt (sdf9k3) from DB.
+
+Computes Hash("pulkitsdf9k3") → z4x5v6....
+
+Compares with stored hash (z4x5v6...).
+
+Match? → Login success!
+
+Best Practices
+✔ Never store plain passwords. Always hash + salt.
+✔ Use bcrypt/PBKDF2 (not fast hashes like SHA-256).
+✔ Unique salt per user.
+
+Example Table (Database View)
+Username	Salt	Hashed Password
+Pulkit	sdf9k3	z4x5v6... (pulkitsdf9k3)
+Rahul	xyz78	r4t5y6... (rahulxyz78)
+Final Cheat Sheet
+Hashing = Password → Lock (irreversible).
+
+Salt = Har password mein namak daalo!
+
+bcrypt = Slow + Secure hash function.
+
+"Salt + Slow Hash = Hackers ki Band Bajao!" 🔒😎

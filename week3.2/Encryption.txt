@@ -1,0 +1,92 @@
+ere’s a concise, point-wise English version of the encryption notes for easy reference:
+
+Encryption Notes (English)
+1. What is Encryption?
+Process of converting data into a coded form to prevent unauthorized access.
+
+Requires a key to encrypt (lock) and decrypt (unlock).
+
+Example:
+
+Original: "Transfer $100" → Encrypted: "Gh7#kL9!qW" → Decrypted: "Transfer $100".
+
+2. Types of Encryption
+A) Symmetric Encryption
+Key: Single key for both encryption & decryption.
+
+Algorithms: AES, DES, Blowfish.
+
+Pros: Fast, efficient for large data.
+
+Cons: Key distribution is risky (if key is stolen, data is compromised).
+
+Use Case: Encrypting files, disk encryption.
+
+B) Asymmetric Encryption
+Keys:
+
+Public Key: Shared openly (used to encrypt).
+
+Private Key: Kept secret (used to decrypt).
+
+Algorithms: RSA, ECC.
+
+Pros: Secure (no key-sharing risk).
+
+Cons: Slower than symmetric encryption.
+
+Use Case: SSL/TLS (HTTPS), digital signatures.
+
+3. Encryption vs Hashing
+Feature	Encryption	Hashing
+Reversible?	Yes (with key)	No (one-way function)
+Purpose	Secure data transmission	Password storage
+Keys	Required	Not required
+Example:
+
+Encryption: Email → Encrypt → Send → Decrypt → Email.
+
+Hashing: "password123" → (SHA-256) → "a1b2c3..." (stored in DB).
+
+4. Real-World Applications
+HTTPS/SSL: Encrypts web traffic (symmetric + asymmetric combo).
+
+WhatsApp: End-to-end encryption (asymmetric).
+
+VPNs: Encrypts internet connections.
+
+Banking: Secures transactions (e.g., UPI, credit cards).
+
+5. How It Works (Example)
+Scenario: Sending "Meet at 5PM" securely.
+
+Symmetric (AES):
+Key: "secret123" (shared between sender/receiver).
+
+Encrypt: "Meet at 5PM" + "secret123" → "XyZ12#kLmN".
+
+Decrypt: "XyZ12#kLmN" + "secret123" → Original message.
+
+Asymmetric (RSA):
+Receiver’s Keys:
+
+Public Key: "PUL_123" (shared).
+
+Private Key: "PUL_private" (secret).
+
+Encrypt (Sender): "Meet at 5PM" + "PUL_123" → "AbC!2@3".
+
+Decrypt (Receiver): "AbC!2@3" + "PUL_private" → Original message.
+
+Key Takeaways
+✔ Symmetric: 1 key → Fast but risky key-sharing.
+✔ Asymmetric: 2 keys → Secure but slower.
+✔ Always use:
+
+HTTPS (SSL/TLS) for websites.
+
+End-to-end encryption for messaging (e.g., WhatsApp).
+
+Hashing (with salt) for passwords.
+
+"Encryption = Digital Lockbox. Hashing = One-Way Grinder." 🔒

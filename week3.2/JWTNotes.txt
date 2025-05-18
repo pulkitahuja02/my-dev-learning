@@ -1,0 +1,57 @@
+
+JWT Authentication Flow (Facebook Example) - Complete Notes
+
+1. User Signup on Facebook
+- User enters:
+  { "email": "user@example.com", "password": "pass123" }
+
+- Facebook server:
+  - Hashes + Salts the password (e.g., using bcrypt).
+  - Stores in DB:
+    { "user_id": "123", "hashed_password": "$2a$10$xyz..." }
+
+2. User Login
+- User submits email + password.
+- Server:
+  - Fetches hashed_password from DB for the email.
+  - Compares hashes (input password vs stored hash).
+  - If match → Generates JWT:
+    {
+      "user_id": "123",
+      "email": "user@example.com",
+      "exp": 1735689600  // Expiry timestamp
+    }
+  - Signs it with secret key (e.g., HMAC-SHA256).
+  - Sends JWT to browser as:
+    Set-Cookie: token=eyJxyz...; HttpOnly; Secure
+
+3. Accessing Profile (JWT in Action)
+- User opens facebook.com/profile.
+- Browser sends JWT:
+  Authorization: Bearer eyJxyz...
+- Facebook server:
+  - Verifies JWT signature using secret key.
+  - Extracts user_id from payload.
+  - Fetches profile data from DB:
+    { "name": "User", "posts": [...], "friends": [...] }
+  - Sends profile data to browser.
+
+4. Why JWT After Password Verification?
+- Avoids repeated password verification (hashing is slow).
+- JWT is stateless and fast (pure cryptographic verification).
+- Tamper-proof using digital signature.
+
+5. Key Security Practices
+- Store JWT in HttpOnly cookies (protect from XSS).
+- Use short expiry times (e.g., 1 hour).
+- Do not store sensitive info (e.g., passwords) in payload.
+
+6. Real-World Analogy
+- Password = ID Card (verified once).
+- JWT = Wristband (grants quick access repeatedly).
+
+Flow Summary:
+Signup → Password Hashed → Login → JWT Issued → Profile Access via JWT
+
+Tools: jsonwebtoken (Node.js), djangorestframework-simplejwt (Python).
+Use Cases: APIs, microservices, mobile apps.
